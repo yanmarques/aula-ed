@@ -1,5 +1,6 @@
 # aula-ed
 [![Build Status](https://travis-ci.org/yanmarques/aula-ed.svg?branch=master)](https://travis-ci.org/yanmarques/aula-ed)
+
 Data structures implementation
 
 ...for data structure class I am having. I will do my best to test every thing.
