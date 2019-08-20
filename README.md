@@ -2,4 +2,4 @@
 Data structures implementation
 
 ## Stack
-[stack](tree/master/src/stack/)
+[stack](src/stack/)
