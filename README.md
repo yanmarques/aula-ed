@@ -13,7 +13,7 @@ keeps a reference of the object right above itself, if any.
 ## Queue
 **Desc.**: Implementation of FIFO data structure using memory allocation.
 
-**Links**: [source-code](src/main/java/com/queue/org) [tests](src/test/java/com/queue/org)
+**Links**: [source-code](src/main/java/com/org/queue/org) [tests](src/test/java/com/queue/org)
 
 ## Simple Chained List
 **Desc.**: Array like implementation, which internally consists on a one-way chain. That means every item on the list keeps a 

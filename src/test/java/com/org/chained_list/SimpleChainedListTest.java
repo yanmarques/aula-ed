@@ -1,6 +1,6 @@
-package com.simple_chained_list.org;
+package com.org.chained_list;
 
-import com.queue.org.Node;
+import com.Node;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,12 +11,13 @@ public class SimpleChainedListTest {
     private SimpleChainedList list;
 
     @BeforeEach
-    public void createList() {
+    public void setUp() {
         this.list = new SimpleChainedList();
     }
 
     @AfterEach
     public void teardown() {
+        this.list.clear();
         this.list = null;
     }
 

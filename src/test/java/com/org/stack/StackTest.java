@@ -1,4 +1,6 @@
-package com.stack.org;
+package com.org.stack;
+
+import com.Node;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +14,7 @@ public class StackTest {
     private Stack stack;
 
     @BeforeEach
-    public void createStack() {
+    public void setUp() {
         stack = new Stack();
     }
 
@@ -30,8 +32,8 @@ public class StackTest {
         stack.insert(expectedAsLast);
         stack.insert(expectedAsFirst);
 
-        assertEquals(stack.remove(true), expectedAsFirst);
-        assertEquals(stack.remove(true), expectedAsLast);
+        assertEquals(stack.remove(), expectedAsFirst);
+        assertEquals(stack.remove(), expectedAsLast);
     }
 
     @Test
@@ -39,7 +41,7 @@ public class StackTest {
         stack.insert(new Node(1));
         assertEquals(stack.getSize(), 1);
 
-        stack.remove(true);
+        stack.remove();
         assertEquals(stack.getSize(), 0);
     }
 
@@ -48,7 +50,7 @@ public class StackTest {
         stack.insert(new Node(1));
         stack.insert(new Node(2));
 
-        Node actual = stack.remove(true);
+        Node actual = stack.remove();
         assertNull(actual.getPrevious());
     }
 
@@ -63,16 +65,16 @@ public class StackTest {
         assertEquals(actual.getPrevious(), expected);
     }
 
-    @Test
-    public void spyNodeOnTopWithoutTouchingIt() {
-        int expected = 1;
-
-        stack.insert(new Node(expected));
-        Node top = stack.getTop();
-        top.setValue(2);
-
-        assertEquals(stack.getTop().getValue(), expected);
-    }
+//    @Test
+//    public void spyNodeOnTopWithoutTouchingIt() {
+//        int expected = 1;
+//
+//        stack.insert(new Node(expected));
+//        Node top = stack.getInitial();
+//        top.setValue(2);
+//
+//        assertEquals(stack.getInitial().getValue(), expected);
+//    }
 
     @Test
     public void stackToArrayReversingInsertOrder() {
@@ -93,7 +95,7 @@ public class StackTest {
         stack.clear();
 
         assertEquals(stack.getSize(), 0);
-        assertNull(stack.getTop());
+        assertNull(stack.getInitial());
     }
 
     @Test
