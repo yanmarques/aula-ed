@@ -1,28 +1,28 @@
-package com;
+package com.org;
 
-public class Node {
-    private int value;
+public class Node <T> {
+    private T value;
     private Node previous, next;
 
-    public Node(int value) {
+    public Node(T value) {
         this.value = value;
     }
 
-    public Node(int value, Node previous, Node next) {
+    public Node(T value, Node previous, Node next) {
         this.value = value;
         this.previous = previous;
         this.next = next;
     }
 
-    public int getValue() {
+    public T getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(T value) {
         this.value = value;
     }
 
-    public Node getPrevious() {
+    public Node<T> getPrevious() {
         return previous;
     }
 
@@ -30,7 +30,7 @@ public class Node {
         this.previous = previous;
     }
 
-    public Node getNext() {
+    public Node<T> getNext() {
         return next;
     }
 
@@ -38,7 +38,7 @@ public class Node {
         this.next = next;
     }
 
-    public Node clone() {
-        return new Node(getValue(), getPrevious(), getNext());
+    public Node<T> clone() {
+        return new Node<>(getValue(), getPrevious(), getNext());
     }
 }

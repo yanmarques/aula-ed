@@ -1,6 +1,6 @@
 package com.org.queue;
 
-import com.Node;
+import com.org.Node;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,11 +9,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class QueueTest {
-    private Queue queue;
+    private Queue<Integer> queue;
 
     @BeforeEach
     public void setUp() {
-        this.queue = new Queue();
+        this.queue = new Queue<>();
     }
 
     @AfterEach
@@ -24,7 +24,7 @@ public class QueueTest {
 
     @Test
     public void insertsOnlyFirst() {
-        Node first = new Node(1);
+        Node<Integer> first = new Node<>(1);
         this.queue.insert(first);
 
         assertEquals(first, this.queue.getInitial());
@@ -33,9 +33,9 @@ public class QueueTest {
 
     @Test
     public void removeNodesInsertedByInsertOrder() {
-        Node first = new Node(1);
-        Node middle = new Node(2);
-        Node last = new Node(3);
+        Node<Integer> first = new Node<>(1);
+        Node<Integer> middle = new Node<>(2);
+        Node<Integer> last = new Node<>(3);
 
         this.queue.insert(first);
         this.queue.insert(middle);
@@ -50,8 +50,8 @@ public class QueueTest {
     public void countQueueLength() {
         int expected = 2;
 
-        this.queue.insert(new Node(1));
-        this.queue.insert(new Node(2));
+        this.queue.insert(new Node<>(1));
+        this.queue.insert(new Node<>(2));
 
         assertEquals(queue.getSize(), expected);
     }

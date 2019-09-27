@@ -1,8 +1,8 @@
 package com.org.interfaces;
 
-import com.Node;
+import com.org.Node;
 
-public interface StorageAccessor extends List {
-    void insert(Node node);
-    Node remove();
+public interface StorageAccessor<T> extends List<T> {
+    void insert(Node<T> node);
+    Node<T> remove();
 }

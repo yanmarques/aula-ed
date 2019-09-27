@@ -1,10 +1,10 @@
 package com.org.chained_list;
 
-import com.Node;
+import com.org.Node;
 
-public class DoubleChainedList extends ForwardChainedMemory {
+public class DoubleChainedList<T> extends ForwardChainedMemory<T> {
     @Override
-    public void insert(int position, Node node) throws ArrayIndexOutOfBoundsException {
+    public void insert(int position, Node<T> node) throws ArrayIndexOutOfBoundsException {
         this.ensurePositionExists(position, true);
 
         if (position == 0) {
@@ -26,7 +26,7 @@ public class DoubleChainedList extends ForwardChainedMemory {
         this.incrementSize();
     }
 
-    public void insertFirst(Node node) {
+    public void insertFirst(Node<T> node) {
         if (this.isEmpty()) {
             this.setInitial(node);
             this.setLast(node);
@@ -39,7 +39,7 @@ public class DoubleChainedList extends ForwardChainedMemory {
         this.incrementSize();
     }
 
-    public void insertLast(Node node) {
+    public void insertLast(Node<T> node) {
         node.setPrevious(this.getLast());
         this.getLast().setNext(node);
         this.setLast(node);
@@ -48,7 +48,7 @@ public class DoubleChainedList extends ForwardChainedMemory {
     }
 
     @Override
-    public Node remove(int position) throws ArrayIndexOutOfBoundsException {
+    public Node<T> remove(int position) throws ArrayIndexOutOfBoundsException {
         this.ensurePositionExists(position, true);
 
         if (position == 0) {
@@ -59,9 +59,9 @@ public class DoubleChainedList extends ForwardChainedMemory {
             return this.removeLast();
         }
 
-        Node target = this.get(position);
-        Node left = target.getPrevious();
-        Node right = target.getNext();
+        Node<T> target = this.get(position);
+        Node<T> left = target.getPrevious();
+        Node<T> right = target.getNext();
 
         left.setNext(right);
         right.setPrevious(left);
@@ -70,9 +70,9 @@ public class DoubleChainedList extends ForwardChainedMemory {
         return target;
     }
 
-    public Node removeFirst() {
-        Node target = this.getInitial();
-        Node right = target.getNext();
+    public Node<T> removeFirst() {
+        Node<T> target = this.getInitial();
+        Node<T> right = target.getNext();
 
         right.setPrevious(null);
         this.setInitial(right);
@@ -81,9 +81,9 @@ public class DoubleChainedList extends ForwardChainedMemory {
         return target;
     }
 
-    public Node removeLast() {
-        Node target = this.getLast();
-        Node left = target.getPrevious();
+    public Node<T> removeLast() {
+        Node<T> target = this.getLast();
+        Node<T> left = target.getPrevious();
 
         left.setNext(null);
         this.setLast(left);

@@ -1,16 +1,16 @@
-package com;
+package com.org;
 
 import com.org.interfaces.List;
 
-abstract public class MemoryList implements List {
-    protected Node firstObject, lastObject;
-    protected int size = 0;
+abstract public class MemoryList<T> implements List<T> {
+    private Node<T> firstObject, lastObject;
+    private int size = 0;
 
-    public Node getInitial() {
+    public Node<T> getInitial() {
         return firstObject;
     }
 
-    public Node getLast() {
+    public Node<T> getLast() {
         return this.lastObject;
     }
 
@@ -27,11 +27,11 @@ abstract public class MemoryList implements List {
         this.size = 0;
     }
 
-    protected void setInitial(Node initial) {
+    protected void setInitial(Node<T> initial) {
         this.firstObject = initial;
     }
 
-    protected void setLast(Node last) {
+    protected void setLast(Node<T> last) {
         this.lastObject = last;
     }
 

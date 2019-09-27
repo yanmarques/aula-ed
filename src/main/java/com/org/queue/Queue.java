@@ -1,12 +1,17 @@
 package com.org.queue;
 
-import com.MemoryList;
+import com.org.ListPathWalker;
 
-import com.Node;
+import com.org.Node;
 import com.org.interfaces.StorageAccessor;
 
-public class Queue extends MemoryList implements StorageAccessor {
-    public void insert(Node node) {
+public class Queue<T> extends ListPathWalker<T> implements StorageAccessor<T> {
+    @Override
+    public void backwardTo(int position, boolean checkPositive) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("Queue can not be backwarded.");
+    }
+
+    public void insert(Node<T> node) {
         if (this.isEmpty()) {
             this.setInitial(node);
             this.setLast(node);
@@ -18,8 +23,8 @@ public class Queue extends MemoryList implements StorageAccessor {
         this.incrementSize();
     }
 
-    public Node remove() {
-        Node target = this.getInitial();
+    public Node<T> remove() {
+        Node<T> target = this.getInitial();
         this.setInitial(target.getNext());
 
         this.decrementSize();

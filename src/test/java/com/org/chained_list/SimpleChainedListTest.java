@@ -1,6 +1,6 @@
 package com.org.chained_list;
 
-import com.Node;
+import com.org.Node;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SimpleChainedListTest {
-    private SimpleChainedList list;
+    private SimpleChainedList<Integer> list;
 
     @BeforeEach
     public void setUp() {
-        this.list = new SimpleChainedList();
+        this.list = new SimpleChainedList<>();
     }
 
     @AfterEach
@@ -23,16 +23,16 @@ public class SimpleChainedListTest {
 
     @Test
     public void insertsOnFirstPosition() throws ArrayIndexOutOfBoundsException {
-        Node first = new Node(1);
+        Node<Integer> first = new Node<>(1);
         this.list.insert(0, first);
         assertEquals(this.list.get(0), first);
     }
 
     @Test
     public void insertsMany() throws ArrayIndexOutOfBoundsException {
-        Node first = new Node(1);
-        Node middle = new Node(2);
-        Node last = new Node(3);
+        Node<Integer> first = new Node<>(1);
+        Node<Integer> middle = new Node<>(2);
+        Node<Integer> last = new Node<>(3);
 
         this.list.insert(0, first);
         this.list.insert(1, middle);
@@ -44,16 +44,16 @@ public class SimpleChainedListTest {
 
     @Test
     public void insertsBetweenExistentPositions() throws ArrayIndexOutOfBoundsException {
-        Node first = new Node(1);
-        Node middle = new Node(2);
-        Node last = new Node(3);
-        Node rebel = new Node(4);
+        Node<Integer> first = new Node<>(1);
+        Node<Integer> middle = new Node<>(2);
+        Node<Integer> last = new Node<>(3);
+        Node<Integer> rebel = new Node<>(4);
 
         this.list.insert(0, first);
         this.list.insert(1, middle);
         this.list.insert(2, last);
 
-        // Inserts the node in the middle position
+        // Inserts the Node<Integer> in the middle position
         this.list.insert(1, rebel);
 
         assertEquals(this.list.getSize(), 4);
@@ -63,14 +63,14 @@ public class SimpleChainedListTest {
 
     @Test
     public void insertsInFirstPositionWithNonEmptyList() throws ArrayIndexOutOfBoundsException {
-        Node first = new Node(1);
-        Node last = new Node(2);
-        Node rebel = new Node(3);
+        Node<Integer> first = new Node<>(1);
+        Node<Integer> last = new Node<>(2);
+        Node<Integer> rebel = new Node<>(3);
 
         this.list.insert(0, first);
         this.list.insert(1, last);
 
-        // Inserts the node in the middle position
+        // Inserts the Node<Integer> in the middle position
         this.list.insert(0, rebel);
 
         assertEquals(this.list.getSize(), 3);
@@ -80,9 +80,9 @@ public class SimpleChainedListTest {
 
     @Test
     public void removeMiddlePosition() throws ArrayIndexOutOfBoundsException {
-        Node first = new Node(1);
-        Node middle = new Node(2);
-        Node last = new Node(3);
+        Node<Integer> first = new Node<>(1);
+        Node<Integer> middle = new Node<>(2);
+        Node<Integer> last = new Node<>(3);
 
         this.list.insert(0, first);
         this.list.insert(1, middle);
@@ -95,9 +95,9 @@ public class SimpleChainedListTest {
 
     @Test
     public void removeLastPosition() throws ArrayIndexOutOfBoundsException {
-        Node first = new Node(1);
-        Node middle = new Node(2);
-        Node last = new Node(3);
+        Node<Integer> first = new Node<>(1);
+        Node<Integer> middle = new Node<>(2);
+        Node<Integer> last = new Node<>(3);
 
         this.list.insert(0, first);
         this.list.insert(1, middle);
@@ -110,9 +110,9 @@ public class SimpleChainedListTest {
 
     @Test
     public void removeFirstPosition() throws ArrayIndexOutOfBoundsException {
-        Node first = new Node(1);
-        Node middle = new Node(2);
-        Node last = new Node(3);
+        Node<Integer> first = new Node<>(1);
+        Node<Integer> middle = new Node<>(2);
+        Node<Integer> last = new Node<>(3);
 
         this.list.insert(0, first);
         this.list.insert(1, middle);
@@ -125,9 +125,9 @@ public class SimpleChainedListTest {
 
     @Test
     public void countListLength() throws ArrayIndexOutOfBoundsException {
-        Node first = new Node(1);
-        Node middle = new Node(2);
-        Node last = new Node(3);
+        Node<Integer> first = new Node<>(1);
+        Node<Integer> middle = new Node<>(2);
+        Node<Integer> last = new Node<>(3);
 
         this.list.insert(0, first);
         this.list.insert(1, middle);
@@ -138,14 +138,14 @@ public class SimpleChainedListTest {
 
     @Test
     public void blockInsertWithNegativePosition() {
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> this.list.insert(-1, new Node(1)));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> this.list.insert(-1, new Node<>(1)));
     }
 
     @Test
     public void blockInsertWithOutOfListBounds() {
-        this.list.insert(0, new Node(1));
+        this.list.insert(0, new Node<>(1));
         int invalidPosition = this.list.getSize() + 1;
 
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> this.list.insert(invalidPosition, new Node(1)));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> this.list.insert(invalidPosition, new Node<>(1)));
     }
 }
