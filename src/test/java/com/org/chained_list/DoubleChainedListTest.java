@@ -1,6 +1,6 @@
 package com.org.chained_list;
 
-import com.Node;
+import com.org.Node;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DoubleChainedListTest {
-    private DoubleChainedList list;
+    private DoubleChainedList<Integer> list;
 
     @BeforeEach
     public void setUp() {
-        this.list = new DoubleChainedList();
+        this.list = new DoubleChainedList<>();
     }
 
     @AfterEach
@@ -23,7 +23,7 @@ public class DoubleChainedListTest {
 
     @Test
     public void insertFirstPositionWhenEmpty() {
-        Node first = new Node(1);
+        Node<Integer> first = new Node<>(1);
         this.list.insert(0, first);
 
         assertEquals(this.list.getInitial(), this.list.getLast());
@@ -32,8 +32,8 @@ public class DoubleChainedListTest {
 
     @Test
     public void plugFirstPositionWithExistingNode() {
-        Node willBecameLast = new Node(2);
-        Node willBecameFirst = new Node(1);
+        Node<Integer> willBecameLast = new Node<>(2);
+        Node<Integer> willBecameFirst = new Node<>(1);
 
         this.list.insert(0, willBecameLast);
         this.list.insert(0, willBecameFirst);
@@ -46,10 +46,10 @@ public class DoubleChainedListTest {
 
     @Test
     public void insertsBetweenExistentPositions() {
-        Node first = new Node(1);
-        Node middle = new Node(2);
-        Node last = new Node(3);
-        Node rebel = new Node(4);
+        Node<Integer> first = new Node<>(1);
+        Node<Integer> middle = new Node<>(2);
+        Node<Integer> last = new Node<>(3);
+        Node<Integer> rebel = new Node<>(4);
 
         this.list.insert(0, first);
         this.list.insert(1, middle);
@@ -67,18 +67,18 @@ public class DoubleChainedListTest {
     public void sizeIncrementsOnInsert() {
         int expected = 3;
 
-        this.list.insert(0, new Node(1));
-        this.list.insert(1, new Node(2));
-        this.list.insert(2, new Node(3));
+        this.list.insert(0, new Node<>(1));
+        this.list.insert(1, new Node<>(2));
+        this.list.insert(2, new Node<>(3));
 
         assertEquals(this.list.getSize(), expected);
     }
 
     @Test
     public void removeMiddlePosition() throws ArrayIndexOutOfBoundsException {
-        Node first = new Node(1);
-        Node middle = new Node(2);
-        Node last = new Node(3);
+        Node<Integer> first = new Node<>(1);
+        Node<Integer> middle = new Node<>(2);
+        Node<Integer> last = new Node<>(3);
 
         this.list.insert(0, first);
         this.list.insert(1, middle);
@@ -91,9 +91,9 @@ public class DoubleChainedListTest {
 
     @Test
     public void removeLastPosition() throws ArrayIndexOutOfBoundsException {
-        Node first = new Node(1);
-        Node middle = new Node(2);
-        Node last = new Node(3);
+        Node<Integer> first = new Node<>(1);
+        Node<Integer> middle = new Node<>(2);
+        Node<Integer> last = new Node<>(3);
 
         this.list.insert(0, first);
         this.list.insert(1, middle);
@@ -106,9 +106,9 @@ public class DoubleChainedListTest {
 
     @Test
     public void removeFirstPosition() throws ArrayIndexOutOfBoundsException {
-        Node first = new Node(1);
-        Node middle = new Node(2);
-        Node last = new Node(3);
+        Node<Integer> first = new Node<>(1);
+        Node<Integer> middle = new Node<>(2);
+        Node<Integer> last = new Node<>(3);
 
         this.list.insert(0, first);
         this.list.insert(1, middle);

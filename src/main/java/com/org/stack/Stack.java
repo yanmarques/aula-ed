@@ -1,13 +1,18 @@
 package com.org.stack;
 
-import com.MemoryList;
+import com.org.ListPathWalker;
 import com.org.interfaces.StorageAccessor;
 
 import java.util.ArrayList;
-import com.Node;
+import com.org.Node;
 
-public class Stack extends MemoryList implements StorageAccessor {
-    public void insert(Node node) {
+public class Stack<T> extends ListPathWalker<T> implements StorageAccessor<T> {
+    @Override
+    public void forwardTo(int position, boolean checkPositive) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("Stack can not be forwarded.");
+    }
+
+    public void insert(Node<T> node) {
         if (! isEmpty()) {
             node.setPrevious(this.getInitial());
         }
@@ -16,16 +21,16 @@ public class Stack extends MemoryList implements StorageAccessor {
         this.incrementSize();
     }
 
-    public Node remove() throws IllegalAccessError {
+    public Node<T> remove() throws IllegalAccessError {
         return this.remove(true);
     }
 
-    public Node remove(boolean forget) throws IllegalAccessError {
+    public Node<T> remove(boolean forget) throws IllegalAccessError {
         if (isEmpty()) {
             throw new IllegalAccessError("Stack is already empty.");
         }
 
-        Node current = this.getInitial();
+        Node<T> current = this.getInitial();
         this.setInitial(current.getPrevious());
 
         if (forget) {
@@ -36,13 +41,15 @@ public class Stack extends MemoryList implements StorageAccessor {
         return current;
     }
 
-    public ArrayList<Node> toArray() {
-        ArrayList<Node> stack = new ArrayList<>();
-        Node running = this.getInitial();
-        while (running != null) {
-            stack.add(running);
-            running = running.getPrevious();
+    public ArrayList<Node<T>> toArray() {
+        ArrayList<Node<T>> stack = new ArrayList<>();
+
+        this.resetNode();
+        while (this.getCurrentNode() != null) {
+            stack.add(this.getCurrentNode());
+            this.backwardOperation();
         }
+
         return stack;
     }
 }

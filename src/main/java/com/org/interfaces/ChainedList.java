@@ -1,9 +1,9 @@
 package com.org.interfaces;
 
-import com.Node;
+import com.org.Node;
 
-public interface ChainedList extends List {
-    void insert(int position, Node Node) throws ArrayIndexOutOfBoundsException;
-    Node remove(int position) throws ArrayIndexOutOfBoundsException;
-    Node get(int position) throws ArrayIndexOutOfBoundsException;
+public interface ChainedList<T> extends List<T> {
+    void insert(int position, Node<T> Node) throws ArrayIndexOutOfBoundsException;
+    Node<T> remove(int position) throws ArrayIndexOutOfBoundsException;
+    Node<T> get(int position) throws ArrayIndexOutOfBoundsException;
 }
