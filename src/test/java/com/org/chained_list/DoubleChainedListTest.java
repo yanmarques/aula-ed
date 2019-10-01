@@ -118,4 +118,37 @@ public class DoubleChainedListTest {
         assertEquals(this.list.get(0), this.list.getInitial());
         assertEquals(this.list.get(1), last);
     }
+
+    @Test
+    public void insertOnFirstPositionWhenEmpty() {
+        Node<Integer> uniqueNode = new Node<>(1);
+        this.list.insertLast(uniqueNode);
+
+        assertEquals(this.list.getInitial(), uniqueNode);
+        assertEquals(this.list.getLast(), uniqueNode);
+    }
+
+    @Test
+    public void removeFirstPositionWithOneNode() {
+        Node<Integer> node = new Node<>(1);
+
+        this.list.insertLast(node);
+        Node<Integer> removed = this.list.removeFirst();
+
+        assertEquals(removed, node);
+        assertNull(this.list.getLast());
+        assertTrue(this.list.isEmpty());
+    }
+
+    @Test
+    public void removeLastPositionWithOneNode() {
+        Node<Integer> node = new Node<>(1);
+
+        this.list.insertLast(node);
+        Node<Integer> removed = this.list.removeLast();
+
+        assertEquals(removed, node);
+        assertNull(this.list.getLast());
+        assertTrue(this.list.isEmpty());
+    }
 }

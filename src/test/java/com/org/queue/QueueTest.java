@@ -55,4 +55,20 @@ public class QueueTest {
 
         assertEquals(queue.getSize(), expected);
     }
+
+    @Test
+    public void removeAllNodesWillEmpty() {
+        this.queue.insert(new Node<>(1));
+        this.queue.insert(new Node<>(2));
+
+        this.queue.remove();
+        this.queue.remove();
+
+        assertTrue(this.queue.isEmpty());
+    }
+
+    @Test
+    public void doNotRemoveFromEmpty() {
+        assertThrows(IllegalAccessError.class, queue::remove);
+    }
 }
