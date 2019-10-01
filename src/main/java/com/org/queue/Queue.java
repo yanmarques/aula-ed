@@ -23,7 +23,12 @@ public class Queue<T> extends ListPathWalker<T> implements StorageAccessor<T> {
         this.incrementSize();
     }
 
-    public Node<T> remove() {
+    @Override
+    public Node<T> remove() throws IllegalAccessError {
+        if (isEmpty()) {
+            throw new IllegalAccessError("Queue is already empty.");
+        }
+
         Node<T> target = this.getInitial();
         this.setInitial(target.getNext());
 
