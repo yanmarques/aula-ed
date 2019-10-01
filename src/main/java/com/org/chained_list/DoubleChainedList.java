@@ -42,11 +42,14 @@ public class DoubleChainedList<T> extends PositionedMemoryAccess<T> {
     }
 
     public void insertLast(Node<T> node) {
-        node.setPrevious(this.getLast());
-        this.getLast().setNext(node);
-        this.setLast(node);
-
-        this.incrementSize();
+        if (this.isEmpty())  {
+            this.insertFirst(node);
+        } else {
+            node.setPrevious(this.getLast());
+            this.getLast().setNext(node);
+            this.setLast(node);
+            this.incrementSize();
+        }
     }
 
     @Override
@@ -73,10 +76,17 @@ public class DoubleChainedList<T> extends PositionedMemoryAccess<T> {
     }
 
     public Node<T> removeFirst() {
+        this.ensurePositionExists(0, true);
+
         Node<T> target = this.getInitial();
         Node<T> right = target.getNext();
 
-        right.setPrevious(null);
+        if (right == null) {
+            this.setLast(null);
+        } else{
+            right.setPrevious(null);
+        }
+
         this.setInitial(right);
 
         this.decrementSize();
@@ -84,10 +94,17 @@ public class DoubleChainedList<T> extends PositionedMemoryAccess<T> {
     }
 
     public Node<T> removeLast() {
+        this.ensurePositionExists(this.getSize(), true);
+
         Node<T> target = this.getLast();
         Node<T> left = target.getPrevious();
 
-        left.setNext(null);
+        if (left == null) {
+            this.setInitial(null);
+        } else {
+            left.setNext(null);
+        }
+
         this.setLast(left);
 
         this.decrementSize();
