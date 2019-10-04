@@ -7,7 +7,7 @@ public class DoubleChainedList<T> extends PositionedMemoryAccess<T> {
 
     @Override
     public void insert(int position, Node<T> node) throws ArrayIndexOutOfBoundsException {
-        this.ensurePositionExists(position, true);
+        this.ensurePositionExists(position);
 
         if (position == 0) {
             this.insertFirst(node);
@@ -54,7 +54,7 @@ public class DoubleChainedList<T> extends PositionedMemoryAccess<T> {
 
     @Override
     public Node<T> remove(int position) throws ArrayIndexOutOfBoundsException {
-        this.ensurePositionExists(position, true);
+        this.ensurePositionExists(position);
 
         if (position == 0) {
             return this.removeFirst();
@@ -76,7 +76,7 @@ public class DoubleChainedList<T> extends PositionedMemoryAccess<T> {
     }
 
     public Node<T> removeFirst() {
-        this.ensurePositionExists(0, true);
+        this.ensurePositionExists(0);
 
         Node<T> target = this.getInitial();
         Node<T> right = target.getNext();
@@ -94,7 +94,7 @@ public class DoubleChainedList<T> extends PositionedMemoryAccess<T> {
     }
 
     public Node<T> removeLast() {
-        this.ensurePositionExists(this.getSize(), true);
+        this.ensurePositionExists(this.getSize());
 
         Node<T> target = this.getLast();
         Node<T> left = target.getPrevious();
@@ -141,17 +141,17 @@ public class DoubleChainedList<T> extends PositionedMemoryAccess<T> {
     }
 
     @Override
-    protected void resetCurrentNode(Node<T> nextNode, int currentPosition) {
+    protected void resetToInitialNode() {
         if (this.getCurrentNode() == null || this.resetOverride) {
-            super.resetCurrentNode(nextNode, currentPosition);
+            super.resetToInitialNode();
         }
     }
 
     protected void binaryPointerMove(boolean forwarding, int position) {
         if (forwarding) {
-            this.forwardTo(position, true);
+            this.forwardTo(position);
         } else {
-            this.backwardTo(position, true);
+            this.backwardTo(position);
         }
     }
 }

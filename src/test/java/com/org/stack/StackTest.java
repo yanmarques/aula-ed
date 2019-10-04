@@ -2,6 +2,9 @@ package com.org.stack;
 
 import com.org.Node;
 
+import com.org.chained_list.DoubleChainedList;
+import com.org.interfaces.ChainedList;
+import com.org.interfaces.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -77,16 +80,16 @@ public class StackTest {
 //    }
 
     @Test
-    public void stackToArrayReversingInsertOrder() {
-        Node<Integer> firstNode = new Node<>(1);
-        Node<Integer> lastNode = new Node<>(2);
+    public void stackToListReversingInsertOrder() {
+        Integer firstNode = 1;
+        Integer lastNode = 2;
 
-        stack.insert(firstNode);
-        stack.insert(lastNode);
+        stack.insert(new Node<>(firstNode));
+        stack.insert(new Node<>(lastNode));
 
-        ArrayList<Node<Integer>> actual = stack.toArray();
-        assertEquals(actual.get(0), lastNode);
-        assertEquals(actual.get(1), firstNode);
+        ChainedList<Integer> actual = stack.toList();
+        assertEquals(actual.get(0).getValue(), lastNode);
+        assertEquals(actual.get(1).getValue(), firstNode);
     }
 
     @Test

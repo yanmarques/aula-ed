@@ -4,11 +4,6 @@ import com.org.Node;
 
 public class SimpleChainedList<T> extends PositionedMemoryAccess<T> {
     @Override
-    public void backwardTo(int position, boolean checkPositive) throws UnsupportedOperationException {
-        throw new UnsupportedOperationException("Simple chain only forwards.");
-    }
-
-    @Override
     public Node<T> getLast() {
         // Really poor implementation to get last element
         // TODO save last element on lastObject internal variable
@@ -17,7 +12,7 @@ public class SimpleChainedList<T> extends PositionedMemoryAccess<T> {
 
     @Override
     public void insert(int position, Node<T> node) throws ArrayIndexOutOfBoundsException {
-        this.ensurePositionExists(position, true);
+        this.ensurePositionExists(position);
 
         if (position == 0) {
             node.setNext(this.getInitial());
@@ -33,7 +28,7 @@ public class SimpleChainedList<T> extends PositionedMemoryAccess<T> {
 
     @Override
     public Node<T> remove(int position) throws ArrayIndexOutOfBoundsException {
-        this.ensurePositionExists(position, true);
+        this.ensurePositionExists(position);
 
         Node<T> target;
 
@@ -53,7 +48,7 @@ public class SimpleChainedList<T> extends PositionedMemoryAccess<T> {
 
     @Override
     protected Node<T> offsetGet(int position) throws ArrayIndexOutOfBoundsException {
-        this.forwardTo(position, true);
+        this.forwardTo(position);
         return this.getCurrentNode();
     }
 }

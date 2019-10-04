@@ -74,8 +74,8 @@ public class SimpleChainedListTest {
         this.list.insert(0, rebel);
 
         assertEquals(this.list.getSize(), 3);
-        assertEquals(this.list.get(0), rebel);
-        assertEquals(this.list.get(1), first);
+        assertEquals(rebel.getValue(), this.list.get(0).getValue());
+        assertEquals(first.getValue(), this.list.get(1).getValue());
     }
 
     @Test

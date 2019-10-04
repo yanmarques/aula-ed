@@ -5,6 +5,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DoubleChainedListTest {
@@ -150,5 +153,29 @@ public class DoubleChainedListTest {
         assertEquals(removed, node);
         assertNull(this.list.getLast());
         assertTrue(this.list.isEmpty());
+    }
+
+    @Test
+    public void iterationMapEachItem() {
+        Integer first = 1;
+        Integer last = 2;
+
+        list.insertLast(new Node<>(first));
+        list.insertLast(new Node<>(last));
+
+        int index = 0;
+        for (Integer item : list) {
+            switch (index) {
+                case 0:
+                    assertEquals(first, item);
+                    break;
+                case 1:
+                    assertEquals(last, item);
+                    break;
+            }
+            index++;
+        }
+
+        assertEquals(2, index);
     }
 }
