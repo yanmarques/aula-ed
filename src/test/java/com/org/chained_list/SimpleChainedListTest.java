@@ -148,4 +148,48 @@ public class SimpleChainedListTest {
 
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> this.list.insert(invalidPosition, new Node<>(1)));
     }
+
+    @Test
+    public void removeElementByInstance() {
+        Integer first = 1;
+        list.insert(0, new Node<>(first));
+        list.remove(first);
+        assertTrue(list.isEmpty());
+    }
+
+    @Test
+    public void getElementIndexByInstance() {
+        Node<Integer> first = new Node<>(1);
+        Node<Integer> middle = new Node<>(2);
+        Node<Integer> last = new Node<>(3);
+
+        this.list.insert(0, first);
+        this.list.insert(1, middle);
+        this.list.insert(2, last);
+
+        assertEquals(1, this.list.index(middle.getValue()));
+    }
+
+    @Test
+    public void throwsExceptionWhenItemNotFound() {
+        assertThrows(RuntimeException.class, () -> list.index(1));
+        assertThrows(RuntimeException.class, () -> list.remove(1));
+    }
+
+    @Test
+    public void getIndexByInstanceAfterGetOperation() {
+        Node<Integer> first = new Node<>(1);
+        Node<Integer> middleEast = new Node<>(2);
+        Node<Integer> middleWest = new Node<>(2);
+        Node<Integer> last = new Node<>(3);
+
+        this.list.insert(0, first);
+        this.list.insert(1, middleEast);
+        this.list.insert(2, middleWest);
+        this.list.insert(3, last);
+
+        list.get(2);
+
+        assertEquals(1, this.list.index(middleEast.getValue()));
+    }
 }
