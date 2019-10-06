@@ -6,7 +6,7 @@ import com.org.interfaces.WalkIterator;
 abstract public class ListPathWalker<T> extends MemoryList<T>
         implements PathWalker<T>, Iterable<T> {
 
-    private WalkIterator<T> cursor;
+    protected WalkIterator<T> cursor;
 
     protected ListPathWalker() {
         super();
@@ -28,7 +28,7 @@ abstract public class ListPathWalker<T> extends MemoryList<T>
         this.ensurePositionExists(position);
 
         this.resetToInitialNode();
-        while (this.getCursor().hasNext() && this.getCurrentPosition() <= position) {
+        while (this.getCursor().hasNext() && this.getCurrentPosition() < position) {
             this.getCursor().next();
         }
     }
@@ -43,7 +43,7 @@ abstract public class ListPathWalker<T> extends MemoryList<T>
         this.ensurePositionExists(position);
 
         this.resetToLastNode();
-        while (this.getCursor().hasPrevious() && this.getCurrentPosition() >= position) {
+        while (this.getCursor().hasPrevious() && this.getCurrentPosition() > position) {
             this.getCursor().previous();
         }
     }
@@ -53,11 +53,11 @@ abstract public class ListPathWalker<T> extends MemoryList<T>
     }
 
     protected void resetToInitialNode() {
-        getCursor().resetNode(this.getInitial(), 0);
+        getCursor().resetNode(this.getInitial(), -1);
     }
 
     protected void resetToLastNode() {
-        getCursor().resetNode(this.getLast(), this.getSize() - 1);
+        getCursor().resetNode(this.getLast(), this.getSize());
     }
 
     protected class WalkIteratorImpl<T> implements WalkIterator<T> {
@@ -121,10 +121,6 @@ abstract public class ListPathWalker<T> extends MemoryList<T>
             return this.stopping || current() == null;
         }
 
-        protected void setCleanOnStop(boolean status) {
-            this.cleanOnStop = status;
-        }
-
         public void resetNode(Node<T> nextNode, int position) {
             Node<T> firstOne = new Node<>(null);
             firstOne.setNext(nextNode);
@@ -135,6 +131,10 @@ abstract public class ListPathWalker<T> extends MemoryList<T>
 
         protected void setCurrentPosition(int currentPosition) {
             this.currentPosition = currentPosition;
+        }
+
+        protected void setCleanOnStop(boolean status) {
+            this.cleanOnStop = status;
         }
 
         protected void forwardOperation() {

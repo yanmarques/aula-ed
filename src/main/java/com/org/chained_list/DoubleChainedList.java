@@ -147,6 +147,13 @@ public class DoubleChainedList<T> extends PositionedMemoryAccess<T> {
         }
     }
 
+    @Override
+    protected void resetToLastNode() {
+        if (this.getCurrentNode() == null || this.resetOverride) {
+            super.resetToLastNode();
+        }
+    }
+
     protected void binaryPointerMove(boolean forwarding, int position) {
         if (forwarding) {
             this.forwardTo(position);
