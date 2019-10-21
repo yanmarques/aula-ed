@@ -2,9 +2,12 @@ package com.org.queue;
 
 import com.org.Node;
 
+import com.org.interfaces.WalkIterator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -70,5 +73,26 @@ public class QueueTest {
     @Test
     public void doNotRemoveFromEmpty() {
         assertThrows(IllegalAccessError.class, queue::remove);
+    }
+
+    @Test
+    public void iterateFromFirstToLastNode() {
+        Integer first = 1;
+        Integer last = 2;
+
+        this.queue.insert(new Node<>(first));
+        this.queue.insert(new Node<>(last));
+
+        WalkIterator<Integer> iterator = this.queue.iterator();
+
+        while (iterator.hasNext()) {
+            if (iterator.position() == 0) {
+                assertEquals(iterator.next(), first);
+            } else if (iterator.position() == 1) {
+                assertEquals(iterator.next(), last);
+            }
+        }
+
+        assertEquals(2, iterator.position());
     }
 }

@@ -1,17 +1,24 @@
 package com.org.stack;
 
 import com.org.ListPathWalker;
+import com.org.chained_list.DoubleChainedList;
+import com.org.interfaces.ChainedList;
 import com.org.interfaces.StorageAccessor;
 
-import java.util.ArrayList;
 import com.org.Node;
+import com.org.interfaces.WalkIterator;
 
 public class Stack<T> extends ListPathWalker<T> implements StorageAccessor<T> {
-    @Override
-    public void forwardTo(int position, boolean checkPositive) throws UnsupportedOperationException {
-        throw new UnsupportedOperationException("Stack can not be forwarded.");
+    public Stack() {
+        super();
     }
 
+    @Override
+    public WalkIterator<T> iterator() {
+        return new BackwardIterator(this.getInitial());
+    }
+
+    @Override
     public void insert(Node<T> node) {
         if (! isEmpty()) {
             node.setPrevious(this.getInitial());
@@ -21,6 +28,7 @@ public class Stack<T> extends ListPathWalker<T> implements StorageAccessor<T> {
         this.incrementSize();
     }
 
+    @Override
     public Node<T> remove() throws IllegalAccessError {
         return this.remove(true);
     }
@@ -41,15 +49,34 @@ public class Stack<T> extends ListPathWalker<T> implements StorageAccessor<T> {
         return current;
     }
 
-    public ArrayList<Node<T>> toArray() {
-        ArrayList<Node<T>> stack = new ArrayList<>();
+    @Override
+    public ChainedList<T> toList() {
+        DoubleChainedList<T> stack = new DoubleChainedList<>();
 
-        this.resetToInitialNode();
-        while (this.getCurrentNode() != null) {
-            stack.add(this.getCurrentNode());
-            this.backwardOperation();
+        for (T item : this) {
+            stack.insertLast(new Node<>(item));
         }
 
         return stack;
+    }
+
+    public class BackwardIterator extends WalkIteratorImpl<T> {
+        public BackwardIterator(Node<T> first) {
+            super(first);
+        }
+
+        public BackwardIterator(boolean cleanOnStopping, Node<T> first) {
+            super(cleanOnStopping, first);
+        }
+
+        @Override
+        public boolean hasNext() {
+            return this.hasPrevious();
+        }
+
+        @Override
+        public T next() {
+            return previous();
+        }
     }
 }

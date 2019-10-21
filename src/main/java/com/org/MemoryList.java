@@ -43,10 +43,9 @@ abstract public class MemoryList<T> implements List<T> {
         this.size--;
     }
 
-    protected void ensurePositionExists(int position, boolean checkPositive) throws ArrayIndexOutOfBoundsException {
-        if ((checkPositive && position < 0) || position > this.getSize()) {
+    protected void ensurePositionExists(int position) {
+        if (position < 0 || position > this.getSize())
             throw new ArrayIndexOutOfBoundsException(
                     "Position " + position + " is not valid.");
-        }
     }
 }

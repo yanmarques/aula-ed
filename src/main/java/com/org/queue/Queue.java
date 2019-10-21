@@ -1,16 +1,17 @@
 package com.org.queue;
 
 import com.org.ListPathWalker;
-
 import com.org.Node;
+import com.org.chained_list.DoubleChainedList;
+import com.org.interfaces.ChainedList;
 import com.org.interfaces.StorageAccessor;
 
 public class Queue<T> extends ListPathWalker<T> implements StorageAccessor<T> {
-    @Override
-    public void backwardTo(int position, boolean checkPositive) throws UnsupportedOperationException {
-        throw new UnsupportedOperationException("Queue can not be backwarded.");
+    public Queue() {
+        super();
     }
 
+    @Override
     public void insert(Node<T> node) {
         if (this.isEmpty()) {
             this.setInitial(node);
@@ -34,5 +35,16 @@ public class Queue<T> extends ListPathWalker<T> implements StorageAccessor<T> {
 
         this.decrementSize();
         return target;
+    }
+
+    @Override
+    public ChainedList<T> toList() {
+        DoubleChainedList<T> queue = new DoubleChainedList<>();
+
+        for (T item : this) {
+            queue.insertLast(new Node<>(item));
+        }
+
+        return queue;
     }
 }

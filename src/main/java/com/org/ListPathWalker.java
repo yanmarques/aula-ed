@@ -1,65 +1,150 @@
 package com.org;
 
 import com.org.interfaces.PathWalker;
+import com.org.interfaces.WalkIterator;
 
-abstract public class ListPathWalker<T> extends MemoryList<T> implements PathWalker<T> {
-    private Node<T> currentNode = null;
-    private int currentPosition = 0;
+abstract public class ListPathWalker<T> extends MemoryList<T>
+        implements PathWalker<T>, Iterable<T> {
+
+    protected WalkIterator<T> cursor;
+
+    protected ListPathWalker() {
+        super();
+        this.cursor = new WalkIteratorImpl<>(false);
+    }
 
     @Override
     public int getCurrentPosition() {
-        return currentPosition;
+        return getCursor().position();
     }
 
     @Override
     public Node<T> getCurrentNode() {
-        return currentNode;
+        return getCursor().current();
     }
 
     @Override
-    public void forwardTo(int position, boolean checkPositive) {
-        this.ensurePositionExists(position, checkPositive);
+    public void forwardTo(int position) {
+        this.ensurePositionExists(position);
 
         this.resetToInitialNode();
-        while (this.getCurrentPosition() < position) {
-            this.forwardOperation();
+        while (this.getCursor().hasNext() && this.getCurrentPosition() < position) {
+            this.getCursor().next();
         }
     }
 
     @Override
-    public void backwardTo(int position, boolean checkPositive) {
-        this.ensurePositionExists(position, checkPositive);
+    public WalkIterator<T> iterator() {
+        return new WalkIteratorImpl<>(this.getInitial());
+    }
+
+    @Override
+    public void backwardTo(int position) {
+        this.ensurePositionExists(position);
 
         this.resetToLastNode();
-        while (this.getCurrentPosition() > position) {
-            this.backwardOperation();
+        while (this.getCursor().hasPrevious() && this.getCurrentPosition() > position) {
+            this.getCursor().previous();
         }
     }
 
-    protected void setCurrentPosition(int currentPosition) {
-        this.currentPosition = currentPosition;
+    public WalkIterator<T> getCursor() {
+        return cursor;
     }
 
     protected void resetToInitialNode() {
-        this.resetCurrentNode(this.getInitial(), 0);
+        getCursor().resetNode(this.getInitial(), -1);
     }
 
     protected void resetToLastNode() {
-        this.resetCurrentNode(this.getLast(), this.getSize() - 1);
+        getCursor().resetNode(this.getLast(), this.getSize());
     }
 
-    protected void resetCurrentNode(Node<T> nextNode, int currentPosition) {
-        this.currentNode = nextNode;
-        this.setCurrentPosition(currentPosition);
-    }
+    protected class WalkIteratorImpl<T> implements WalkIterator<T> {
+        private Node<T> currentNode = null;
+        private int currentPosition = 0;
+        private boolean stopping = false;
+        private boolean cleanOnStop = true;
 
-    protected void forwardOperation() {
-        this.currentNode = this.getCurrentNode().getNext();
-        this.currentPosition++;
-    }
+        public WalkIteratorImpl(Node<T> first) {
+            this.resetNode(first, 0);
+        }
 
-    protected void backwardOperation() {
-        this.currentNode = this.getCurrentNode().getPrevious();
-        this.currentPosition--;
+        public WalkIteratorImpl(boolean cleanOnStop, Node<T> first) {
+            this(first);
+            this.setCleanOnStop(cleanOnStop);
+        }
+
+        public WalkIteratorImpl(boolean cleanOnStop) {
+            this.setCleanOnStop(cleanOnStop);
+        }
+
+        @Override
+        public boolean hasNext() {
+            return ! shouldNotStop() && current().getNext() != null;
+        }
+
+        @Override
+        public T next() {
+            this.forwardOperation();
+            return current().getValue();
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return ! shouldNotStop() && current().getPrevious() != null;
+        }
+
+        @Override
+        public T previous() {
+            this.backwardOperation();
+            return current().getValue();
+        }
+
+        public int position() {
+            return currentPosition;
+        }
+
+        public Node<T> current() {
+            return currentNode;
+        }
+
+        @Override
+        public void stop() {
+            this.stopping = true;
+            if (this.cleanOnStop) {
+                this.currentNode = null;
+            }
+        }
+
+        public boolean shouldNotStop() {
+            return this.stopping || current() == null;
+        }
+
+        public void resetNode(Node<T> nextNode, int position) {
+            Node<T> firstOne = new Node<>(null);
+            firstOne.setNext(nextNode);
+            firstOne.setPrevious(nextNode);
+            this.currentNode = firstOne;
+            this.setCurrentPosition(position);
+        }
+
+        protected void setCurrentPosition(int currentPosition) {
+            this.currentPosition = currentPosition;
+        }
+
+        protected void setCleanOnStop(boolean status) {
+            this.cleanOnStop = status;
+        }
+
+        protected void forwardOperation() {
+            this.currentNode = this.current().getNext();
+            this.currentPosition++;
+        }
+
+        protected void backwardOperation() {
+            this.currentNode = this.current().getPrevious();
+            this.currentPosition--;
+        }
     }
 }
